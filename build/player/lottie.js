@@ -556,7 +556,7 @@
         });
       }
     };
-    var _workerSelf = {
+    var a = {
       postMessage: function postMessage(data) {
         workerProxy.onmessage({
           data: data
@@ -1131,12 +1131,12 @@
             return moduleOb;
           }
 
-          if (!_workerSelf.dataManager) {
-            _workerSelf.dataManager = dataFunctionManager();
+          if (!a.dataManager) {
+            a.dataManager = dataFunctionManager();
           }
 
-          if (!_workerSelf.assetLoader) {
-            _workerSelf.assetLoader = function () {
+          if (!a.assetLoader) {
+            a.assetLoader = function () {
               function formatResponse(xhr) {
                 // using typeof doubles the time of execution of this method,
                 // so if available, it's better to use the header to validate the type
@@ -1207,16 +1207,16 @@
           }
 
           if (e.data.type === 'loadAnimation') {
-            _workerSelf.assetLoader.load(e.data.path, e.data.fullPath, function (data) {
-              _workerSelf.dataManager.completeData(data);
+            a.assetLoader.load(e.data.path, e.data.fullPath, function (data) {
+              a.dataManager.completeData(data);
 
-              _workerSelf.postMessage({
+              a.postMessage({
                 id: e.data.id,
                 payload: data,
                 status: 'success'
               });
             }, function () {
-              _workerSelf.postMessage({
+              a.postMessage({
                 id: e.data.id,
                 status: 'error'
               });
@@ -1224,22 +1224,22 @@
           } else if (e.data.type === 'complete') {
             var animation = e.data.animation;
 
-            _workerSelf.dataManager.completeData(animation);
+            a.dataManager.completeData(animation);
 
-            _workerSelf.postMessage({
+            a.postMessage({
               id: e.data.id,
               payload: animation,
               status: 'success'
             });
           } else if (e.data.type === 'loadData') {
-            _workerSelf.assetLoader.load(e.data.path, e.data.fullPath, function (data) {
-              _workerSelf.postMessage({
+            a.assetLoader.load(e.data.path, e.data.fullPath, function (data) {
+              a.postMessage({
                 id: e.data.id,
                 payload: data,
                 status: 'success'
               });
             }, function () {
-              _workerSelf.postMessage({
+              a.postMessage({
                 id: e.data.id,
                 status: 'error'
               });
