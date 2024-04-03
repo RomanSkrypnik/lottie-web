@@ -566,7 +566,7 @@
 
     function createWorker(fn) {
       if (window.Worker && window.Blob && getWebWorker()) {
-        var blob = new Blob(['var _workerSelf = self; self.onmessage = ', fn.toString()], {
+        var blob = new Blob(['var r = self; self.onmessage = ', fn.toString()], {
           type: 'text/javascript'
         }); // var blob = new Blob(['self.onmessage = ', fn.toString()], { type: 'text/javascript' });
 
